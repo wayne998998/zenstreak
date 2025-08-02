@@ -37,10 +37,10 @@ function App() {
         <footer className="text-center py-zen-2xl mt-zen-2xl">
           <div className="max-w-md mx-auto px-4">
             <div className="zen-card p-zen-lg mb-zen-lg">
-              <p className="text-sage-700 text-zen-sm font-medium mb-2">
+              <p className="text-gray-800 text-zen-sm font-semibold mb-2">
                 "Peace comes from within. Do not seek it without."
               </p>
-              <p className="text-sage-500 text-zen-xs italic">
+              <p className="text-gray-700 text-zen-xs italic font-semibold">
                 — Buddha
               </p>
             </div>
