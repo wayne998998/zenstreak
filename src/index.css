@@ -47,19 +47,19 @@
 @layer components {
   /* Enhanced Zen Cards with deeper meditation aesthetic */
   .zen-card {
-    @apply bg-white/75 backdrop-blur-zen rounded-zen-xl shadow-lg border border-white/40;
-    @apply hover:shadow-xl hover:bg-white/85 transition-all duration-500;
+    @apply bg-lime-50/90 backdrop-blur-zen rounded-zen-xl shadow-lg border border-lime-200/40;
+    @apply hover:shadow-xl hover:bg-lime-50 transition-all duration-500;
     @apply relative overflow-hidden;
     /* Subtle inner light effect */
     box-shadow: 
-      0 4px 20px -2px rgba(20, 184, 166, 0.12), 
-      0 2px 8px -2px rgba(20, 184, 166, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      0 4px 20px -2px rgba(132, 204, 22, 0.15), 
+      0 2px 8px -2px rgba(132, 204, 22, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
   
   .zen-card::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-mint-100/25 via-transparent to-sage-100/25;
+    @apply absolute inset-0 bg-gradient-to-br from-lime-100/30 via-transparent to-sage-100/20;
     @apply opacity-70 pointer-events-none;
   }
   
