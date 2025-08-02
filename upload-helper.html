@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenStreak 部署文件清单</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .file-list {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-icon {
+            margin-right: 10px;
+        }
+        .file-name {
+            flex: 1;
+            font-family: monospace;
+        }
+        .file-size {
+            color: #666;
+            font-size: 14px;
+        }
+        .steps {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .step {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .step:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .warning {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .path {
+            background: #263238;
+            color: #aed581;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .button {
+            background: #1976d2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ZenStreak EdgeOne 部署助手</h1>
+        
+        <div class="info">
+            <strong>项目信息：</strong><br>
+            站点名称：zenstreak<br>
+            建议域名：zenstreak.edgeone.site<br>
+            文件数量：6 个文件
+        </div>
+
+        <div class="steps">
+            <h3>📋 部署步骤：</h3>
+            <div class="step">如果需要登录，请先完成登录</div>
+            <div class="step">创建站点或进入已有站点</div>
+            <div class="step">找到"文件管理"或"源站管理"</div>
+            <div class="step">点击"上传文件"或"上传"按钮</div>
+            <div class="step">选择下面列出的所有文件</div>
+        </div>
+
+        <div class="file-list">
+            <h3>📁 需要上传的文件：</h3>
+            <div class="path">/Users/wayne/Documents/test/subagent2/zenstreak/dist</div>
+            
+            <div class="file-item">
+                <span class="file-icon">📄</span>
+                <span class="file-name">index.html</span>
+                <span class="file-size">1.30 KB</span>
+            </div>
+            
+            <div class="file-item">
+                <span class="file-icon">📋</span>
+                <span class="file-name">manifest.json</span>
+                <span class="file-size">PWA配置</span>
+            </div>
+            
+            <div class="file-item">
+                <span class="file-icon">⚙️</span>
+                <span class="file-name">sw.js</span>
+                <span class="file-size">Service Worker</span>
+            </div>
+            
+            <div class="file-item">
+                <span class="file-icon">🖼️</span>
+                <span class="file-name">vite.svg</span>
+                <span class="file-size">图标</span>
+            </div>
+            
+            <div class="file-item">
+                <span class="file-icon">📁</span>
+                <span class="file-name">assets/</span>
+                <span class="file-size">包含2个文件</span>
+            </div>
+            
+            <div class="file-item" style="padding-left: 20px;">
+                <span class="file-icon">📜</span>
+                <span class="file-name">assets/index-33bPkKE0.js</span>
+                <span class="file-size">282.72 KB</span>
+            </div>
+            
+            <div class="file-item" style="padding-left: 20px;">
+                <span class="file-icon">🎨</span>
+                <span class="file-name">assets/index-D4fqe3Rq.css</span>
+                <span class="file-size">84.54 KB</span>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ 重要提示：</strong><br>
+            • 确保上传所有文件，包括 assets 文件夹中的文件<br>
+            • 保持文件的目录结构（assets 文件夹）<br>
+            • index.html 必须在根目录
+        </div>
+
+        <div class="success">
+            <strong>✅ 上传完成后：</strong><br>
+            • 等待几分钟让 CDN 同步<br>
+            • 访问：https://zenstreak.edgeone.site<br>
+            • 如果出现404，检查文件是否都已上传
+        </div>
+
+        <button class="button" onclick="copyPath()">📋 复制文件路径</button>
+    </div>
+
+    <script>
+        function copyPath() {
+            const path = '/Users/wayne/Documents/test/subagent2/zenstreak/dist';
+            navigator.clipboard.writeText(path).then(() => {
+                alert('文件路径已复制到剪贴板！');
+            }).catch(() => {
+                alert('路径：' + path);
+            });
+        }
+    </script>
+</body>
+</html>

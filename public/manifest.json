@@ -1,0 +1,19 @@
+{
+  "name": "ZenStreak - Meditation Habit Tracker",
+  "short_name": "ZenStreak",
+  "description": "Track your daily meditation habit and build lasting mindfulness streaks",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["health", "lifestyle", "productivity"],
+  "screenshots": []
+}

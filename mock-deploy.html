@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenStreak EdgeOne 部署模拟器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #0066ff;
+            margin-bottom: 10px;
+        }
+        
+        .deployment-steps {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .step {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            border-left-color: #0066ff;
+            background: #e6f2ff;
+        }
+        
+        .step.completed {
+            border-left-color: #00cc66;
+            background: #e6ffe6;
+        }
+        
+        .step h3 {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ddd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .step.active .step-icon {
+            background: #0066ff;
+        }
+        
+        .step.completed .step-icon {
+            background: #00cc66;
+        }
+        
+        .console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        
+        .console-line {
+            margin-bottom: 5px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .success { color: #4ec9b0; }
+        .info { color: #569cd6; }
+        .warning { color: #ce9178; }
+        .error { color: #f44747; }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #0066ff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0052cc;
+        }
+        
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #555;
+        }
+        
+        .deployment-info {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .deployment-info h4 {
+            color: #0066ff;
+            margin-bottom: 10px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #0066ff;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ZenStreak EdgeOne 部署模拟器</h1>
+            <p>模拟 EdgeOne 部署流程，展示实际部署步骤</p>
+        </div>
+
+        <div class="deployment-steps">
+            <h2>部署步骤</h2>
+            <div class="step" id="step1">
+                <h3><span class="step-icon">1</span>构建项目</h3>
+                <p>执行 npm run build 构建生产版本</p>
+                <div class="progress-bar"><div class="progress-fill" id="progress1"></div></div>
+            </div>
+            
+            <div class="step" id="step2">
+                <h3><span class="step-icon">2</span>登录 EdgeOne</h3>
+                <p>登录腾讯云 EdgeOne 控制台</p>
+                <div class="progress-bar"><div class="progress-fill" id="progress2"></div></div>
+            </div>
+            
+            <div class="step" id="step3">
+                <h3><span class="step-icon">3</span>创建站点</h3>
+                <p>在 EdgeOne 创建新的静态网站</p>
+                <div class="progress-bar"><div class="progress-fill" id="progress3"></div></div>
+            </div>
+            
+            <div class="step" id="step4">
+                <h3><span class="step-icon">4</span>上传文件</h3>
+                <p>上传 dist 目录中的所有文件</p>
+                <div class="progress-bar"><div class="progress-fill" id="progress4"></div></div>
+            </div>
+            
+            <div class="step" id="step5">
+                <h3><span class="step-icon">5</span>配置域名</h3>
+                <p>配置自定义域名和 HTTPS</p>
+                <div class="progress-bar"><div class="progress-fill" id="progress5"></div></div>
+            </div>
+        </div>
+
+        <div class="console-output" id="console">
+            <div class="console-line info">🚀 开始 ZenStreak EdgeOne 部署...</div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="startDeployment()">开始部署</button>
+            <button class="btn btn-secondary" onclick="resetDeployment()">重置</button>
+        </div>
+
+        <div class="deployment-info" id="deploymentInfo" style="display: none;">
+            <h4>部署信息</h4>
+            <div class="info-item">
+                <span>项目名称:</span>
+                <span>zenstreak</span>
+            </div>
+            <div class="info-item">
+                <span>部署域名:</span>
+                <span id="deploymentUrl">https://zenstreak.edgeone.site</span>
+            </div>
+            <div class="info-item">
+                <span>状态:</span>
+                <span id="deploymentStatus">部署中...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let isDeploying = false;
+        
+        const steps = [
+            {
+                id: 'step1',
+                progressId: 'progress1',
+                duration: 3000,
+                logs: [
+                    { type: 'info', text: '📦 开始构建项目...' },
+                    { type: 'info', text: '> zenstreak@0.0.0 build' },
+                    { type: 'info', text: '> vite build' },
+                    { type: 'info', text: '✓ 51 modules transformed.' },
+                    { type: 'info', text: 'dist/index.html                   1.30 kB' },
+                    { type: 'info', text: 'dist/assets/index-D4fqe3Rq.css   84.54 kB' },
+                    { type: 'info', text: 'dist/assets/index-33bPkKE0.js   282.72 kB' },
+                    { type: 'success', text: '✅ 构建完成!' }
+                ]
+            },
+            {
+                id: 'step2',
+                progressId: 'progress2',
+                duration: 2000,
+                logs: [
+                    { type: 'info', text: '🌐 连接到 EdgeOne 控制台...' },
+                    { type: 'info', text: '🔐 验证登录状态...' },
+                    { type: 'success', text: '✅ 登录成功!' }
+                ]
+            },
+            {
+                id: 'step3',
+                progressId: 'progress3',
+                duration: 3000,
+                logs: [
+                    { type: 'info', text: '📋 检查现有站点...' },
+                    { type: 'info', text: '🆕 创建新站点: zenstreak' },
+                    { type: 'info', text: '📝 配置站点类型: 静态网站' },
+                    { type: 'info', text: '🌐 设置域名: zenstreak.edgeone.site' },
+                    { type: 'success', text: '✅ 站点创建成功!' }
+                ]
+            },
+            {
+                id: 'step4',
+                progressId: 'progress4',
+                duration: 4000,
+                logs: [
+                    { type: 'info', text: '📤 准备上传文件...' },
+                    { type: 'info', text: '📁 扫描 dist 目录...' },
+                    { type: 'info', text: '📦 发现 15 个文件' },
+                    { type: 'info', text: '⬆️ 上传 index.html...' },
+                    { type: 'info', text: '⬆️ 上传 assets/index-D4fqe3Rq.css...' },
+                    { type: 'info', text: '⬆️ 上传 assets/index-33bPkKE0.js...' },
+                    { type: 'info', text: '⬆️ 上传 manifest.json...' },
+                    { type: 'info', text: '⬆️ 上传 sw.js...' },
+                    { type: 'success', text: '✅ 所有文件上传完成!' }
+                ]
+            },
+            {
+                id: 'step5',
+                progressId: 'progress5',
+                duration: 2000,
+                logs: [
+                    { type: 'info', text: '🔧 配置域名解析...' },
+                    { type: 'info', text: '🔒 启用 HTTPS...' },
+                    { type: 'info', text: '⚡ 配置 CDN 加速...' },
+                    { type: 'info', text: '🌍 全球节点同步中...' },
+                    { type: 'success', text: '✅ 部署完成!' },
+                    { type: 'success', text: '🎉 您的网站已上线: https://zenstreak.edgeone.site' }
+                ]
+            }
+        ];
+        
+        function addConsoleLog(type, text) {
+            const console = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            line.textContent = text;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        async function executeStep(step) {
+            const stepElement = document.getElementById(step.id);
+            const progressBar = document.getElementById(step.progressId);
+            
+            stepElement.classList.add('active');
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, step.duration / 20);
+            
+            // Add logs progressively
+            for (let i = 0; i < step.logs.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, step.duration / step.logs.length));
+                addConsoleLog(step.logs[i].type, step.logs[i].text);
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            stepElement.classList.remove('active');
+            stepElement.classList.add('completed');
+            stepElement.querySelector('.step-icon').textContent = '✓';
+        }
+        
+        async function startDeployment() {
+            if (isDeploying) return;
+            
+            isDeploying = true;
+            document.querySelector('.btn-primary').disabled = true;
+            
+            for (let i = 0; i < steps.length; i++) {
+                await executeStep(steps[i]);
+            }
+            
+            // Show deployment info
+            document.getElementById('deploymentInfo').style.display = 'block';
+            document.getElementById('deploymentStatus').textContent = '已上线';
+            document.getElementById('deploymentStatus').style.color = '#00cc66';
+            
+            addConsoleLog('info', '\n📋 后续步骤:');
+            addConsoleLog('info', '1. 访问 https://zenstreak.edgeone.site 查看网站');
+            addConsoleLog('info', '2. 在 EdgeOne 控制台配置自定义域名');
+            addConsoleLog('info', '3. 运行功能测试: SITE_URL=https://zenstreak.edgeone.site node test-deployed-site.js');
+            
+            isDeploying = false;
+        }
+        
+        function resetDeployment() {
+            if (isDeploying) return;
+            
+            // Reset steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active', 'completed');
+                step.querySelector('.step-icon').textContent = step.querySelector('.step-icon').textContent.replace('✓', '');
+            });
+            
+            // Reset progress bars
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                bar.style.width = '0%';
+            });
+            
+            // Clear console
+            document.getElementById('console').innerHTML = '<div class="console-line info">🚀 开始 ZenStreak EdgeOne 部署...</div>';
+            
+            // Hide deployment info
+            document.getElementById('deploymentInfo').style.display = 'none';
+            
+            // Enable button
+            document.querySelector('.btn-primary').disabled = false;
+            
+            currentStep = 0;
+        }
+    </script>
+</body>
+</html>
